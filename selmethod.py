@@ -6,11 +6,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 
-driver_path = ''  # ChromeDriver path
-login_url = '' # Validate
+driver_path = '/usr/bin/chromedriver'  # ChromeDriver path
+login_url = 'https://vignanits.ac.in/Attendance/Validate.php' # Validate
 
 options = webdriver.ChromeOptions()
-options.add_argument('--headless') # for background process
+options.add_argument("--headless") # for background process
+options.add_argument("--window-size=1920,1080")
 
 service = Service(driver_path)
 driver = webdriver.Chrome(service=service, options=options)
@@ -20,7 +21,7 @@ try:
 
     username_input = driver.find_element(By.NAME, 'uname')
     password_input = driver.find_element(By.NAME, 'pass')
-    username_input.send_keys('')  # uname
+    username_input.send_keys('840')  # uname
     password_input.send_keys('vgnt') # pass
     password_input.submit()
 
@@ -42,10 +43,10 @@ try:
     section_select.send_keys('A')    # Select Section
 
     from_date = driver.find_element(By.NAME, 'fdt')
-    from_date.send_keys('01-08-2024') # From Date
+    from_date.send_keys('30-07-2024') # From Date
 
     to_date = driver.find_element(By.NAME, 'tdt')
-    to_date.send_keys('30-10-2024')   # To Date
+    to_date.send_keys('03-11-2024')   # To Date
 
     to_date.submit()
 
@@ -57,14 +58,14 @@ try:
     tables = soup.find_all('table')
 
     if tables:
-        print("Found tables on the page with data.")
-        for i, table in enumerate(tables, 1):
-            print(f"\nTable {i}:")
-            rows = table.find_all('tr')
-            for row in rows:
-                columns = row.find_all(['td', 'th'])
-                data = [col.get_text(strip=True) for col in columns]
-                print(data)
+        attendance_percentage = []
+        for row in tables[0].find_all('tr')[1:]:
+            columns = row.find_all('td')
+            if columns:
+                last_field = columns[-1].get_text(strip=True)
+                attendance_percentage.append(last_field)
+        for value in attendance_percentage:
+            print(value)
     else:
         print("No tables found with data.")
 

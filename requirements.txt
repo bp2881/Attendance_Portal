@@ -3,3 +3,4 @@ BeautifulSoup4
 selenium
 flask
 Cython
+setuptools

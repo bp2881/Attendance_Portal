@@ -1,1 +1,5 @@
 attendance/
+setup.py
+build/
+structures.c
+structures.html

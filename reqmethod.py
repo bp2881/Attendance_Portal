@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import time
 
 # Define URLs
-login_url = '' # Validate
-protected_url = '' # EAttend
-classwise_reports_url = "" # CReports
+login_url = 'https://vignanits.ac.in/Attendance/Validate.php' # Validate
+protected_url = 'https://vignanits.ac.in/Attendance/EAttend.php' # EAttend
+studentwise_report_url = "https://vignanits.ac.in/Attendance/Sreports.php" # CReports
 
 # Login credentials
 payload = {
-    'uname': '',  
-    'pass': ''   
+    'uname': '840',
+    'pass': 'vgnt'
 }
 
 headers = {
@@ -28,11 +28,9 @@ with requests.Session() as session:
         exit(1)
 
     form_data = {
-        'br': '',          # Select Branch
-        'yr': '',            # Select Year
-        'sc': '',            # Select Section
-        'fdt': '',  # From Date
-        'tdt': '',  # To Date
+        'roll':'23891A0549',
+        'fdt': '30-07-24',  # From Date
+        'tdt': '08-11-24',  # To Date
         'Submit': 'Submit'
     }
 
@@ -42,11 +40,11 @@ with requests.Session() as session:
 
     while attempt < max_attempts:
         try:
-            response = session.post(classwise_reports_url, headers=headers, data=form_data, timeout=20)
+            response = session.post(studentwise_report_url, headers=headers, data=form_data, timeout=20)
             soup = BeautifulSoup(response.text, 'html.parser')
             tables = soup.find_all('table')
             if tables and any(row.find('td') for table in tables for row in table.find_all('tr')):
-                print("Class-Wise Report page Accessed")
+                print("Student-Wise Report page Accessed")
                 break
             else:
                 print(f"Attempt {attempt + 1}: Waiting for page to load...")
@@ -61,7 +59,7 @@ with requests.Session() as session:
             break
 
     if response and response.status_code == 200 and tables:
-        print("Class-Wise Report - ")
+        print("Student-Wise Report - ")
         for i, table in enumerate(tables, 1):
             rows = table.find_all('tr')
             data_rows = [row for row in rows if row.find('td')]
@@ -72,4 +70,4 @@ with requests.Session() as session:
                     data = [col.get_text(strip=True) for col in columns]
                     print(data)
     else:
-        print("Timeout on Class-Wise Report")
+        print("Timeout on Student-Wise Report")

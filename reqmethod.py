@@ -9,8 +9,8 @@ studentwise_report_url = "https://vignanits.ac.in/Attendance/Sreports.php" # CRe
 
 # Login credentials
 payload = {
-    'uname': '840',
-    'pass': 'vgnt'
+    'uname': '',
+    'pass': ''
 }
 
 headers = {
@@ -29,8 +29,8 @@ with requests.Session() as session:
 
     form_data = {
         'roll':'23891A0549',
-        'fdt': '30-07-24',  # From Date
-        'tdt': '08-11-24',  # To Date
+        'fdt': '30-07-2024',  # From Date
+        'tdt': '08-11-2024',  # To Date
         'Submit': 'Submit'
     }
 

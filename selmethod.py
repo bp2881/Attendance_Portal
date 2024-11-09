@@ -4,10 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
-import time
 
-driver_path = '/usr/bin/chromedriver'  # ChromeDriver path
-login_url = '' # Validate
+driver_path = webdriver.Chrome()  # ChromeDriver path
+login_url = 'https://vignanits.ac.in/Attendance/Validate.php' # Validate
 
 options = webdriver.ChromeOptions()
 """

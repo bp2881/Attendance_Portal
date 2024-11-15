@@ -5,12 +5,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # for background process
+#options.add_argument("--headless")  # for background process
 options.add_argument("--window-size=1920,1080")
 driver = webdriver.Chrome(options=options)
 
 driver.get("https://vignanits.ac.in/Attendance/Validate.php")
-
+print("going in validate")
 driver.find_element(By.NAME, "uname").send_keys("840")
 driver.find_element(By.NAME, "pass").send_keys("vgnt")
 password_input = driver.find_element(By.NAME, 'pass')
